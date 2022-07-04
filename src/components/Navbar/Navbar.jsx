@@ -7,10 +7,10 @@ const Navbar = () => {
     <>
       <AppBar>
         <Toolbar>
-          <Typography>TradeSellBuy</Typography>
+          <Typography component ={Link} to="/">TradeSellBuy</Typography>
           <Tabs sx={{ marginLeft: "auto" }} textcolor="inherit">
-            <Tab component={Link} to="/login" label="Login" />
-            <Tab component={Link} to="/signup" label="Signup" />
+            <Tab component={Link} to={"/login"} label="Login" />
+            <Tab component={Link} to={"/signup"} label="Signup" />
           </Tabs>
         </Toolbar>
       </AppBar>

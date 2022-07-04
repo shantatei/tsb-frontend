@@ -1,7 +1,5 @@
-import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import LoginForm from "./components/LoginForm";
-import SignupForm from "./components/SignupForm";
+import { Login, Navbar, Signup, Listings } from "./components";
 
 function App() {
   return (
@@ -9,8 +7,9 @@ function App() {
       <div>
         <Navbar />
         <Routes>
-          <Route path="/login" element={<LoginForm />}></Route>
-          <Route path="/signup" element={<SignupForm />}></Route>
+          <Route  path="/" element = {<Listings/>}> </Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/signup" element={<Signup />}></Route>
         </Routes>
       </div>
     </Router>
