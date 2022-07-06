@@ -1,7 +1,9 @@
 import { React, useState } from "react";
+import AuthUser from "../AuthUser";
 import "../styles.css";
 
 const Login = () => {
+  const { http, setToken } = AuthUser();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -9,19 +11,19 @@ const Login = () => {
     e.preventDefault();
     const user = { email, password };
 
-    fetch("http://localhost:8000/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(user),
-    })
-      .then((response) => response.text())
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    //api call
+    http.post("/login", user).then(
+      (res) => {
+        console.log(res.data);
+        setToken(res.data.user, res.data.token);
+      },
+      error => {
+        console.log(error.response.data);
+      }
+    );
+    
   };
+
   return (
     <div className="container">
       <form>

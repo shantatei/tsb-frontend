@@ -1,29 +1,28 @@
 import React, { useState } from "react";
+import { useNavigate} from 'react-router-dom';
+import AuthUser from "../AuthUser";
 import "../styles.css";
 
 const Signup = () => {
+  const navigate = useNavigate();
+  const {http} = AuthUser();
   const [name, setName] = useState("");
-  const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [password_confirmation, setConfirmPassword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const user = { name, username, email, password };
+    const user = { name, email, password , password_confirmation};
 
-    fetch("http://localhost:8000/api/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(user),
+    //api call
+    http.post('/register',user).then((res)=>{
+      console.log(res.data);
+      navigate('/login')
     })
-      .then((response) => response.text())
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
+
+  }
+
 
   return (
     <div className="container">
@@ -41,7 +40,7 @@ const Signup = () => {
               onChange={(e) => setName(e.target.value)}
             />
           </div>
-          <div className="field">
+          {/* <div className="field">
             <label>Username</label>
             <input
               type="text"
@@ -50,8 +49,7 @@ const Signup = () => {
               value={username}
               onChange={(e) => setUserName(e.target.value)}
             />
-          </div>
-          {/* <p>Username</p> */}
+          </div> */}
           <div className="field">
             <label>Email</label>
             <input
@@ -62,7 +60,6 @@ const Signup = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          {/* <p>Email</p> */}
           <div className="field">
             <label>Password</label>
             <input
@@ -73,7 +70,16 @@ const Signup = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          {/* <p>Password</p> */}
+          <div className="field">
+            <label>Confirm Password</label>
+            <input
+              type="new-password"
+              name="new-password"
+              placeholder="Password"
+              value={password_confirmation}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          </div>
           <button className="submitbtn" onClick={handleSubmit}>
             Submit
           </button>
