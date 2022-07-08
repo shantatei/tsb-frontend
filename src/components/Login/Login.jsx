@@ -1,6 +1,6 @@
 import { React } from "react";
 import { useForm } from "react-hook-form";
-import AuthUser from "../AuthUser";
+import AuthUser from "../../utils/AuthUser";
 import "../styles.css";
 
 const Login = () => {
@@ -69,7 +69,7 @@ const Login = () => {
                 required: "Password is Required",
                 minLength: {
                   value: 6,
-                  message: "Minimum password length is 6",
+                  message: "Password must have at least 6 characters",
                 },
               })}
               onKeyUp={()=>{

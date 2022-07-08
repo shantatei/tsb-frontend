@@ -1,7 +1,7 @@
 import React from "react";
 import { AppBar, Typography, Toolbar, Tabs, Tab } from "@mui/material";
 import { Link } from "react-router-dom";
-import AuthUser from "../AuthUser"; 
+import AuthUser from "../../utils/AuthUser"; 
 
 const Navbar = () => {
 
