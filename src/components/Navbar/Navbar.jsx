@@ -12,7 +12,7 @@ import {
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Link } from "react-router-dom";
 import AuthUser from "../../services/AuthUser";
-import AddListingModal from "./AddListingModal";
+import AddListingModal from "../Listings/AddListingModal";
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);

@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React } from "react";
 import { useForm } from "react-hook-form";
 import AuthUser from "../../services/AuthUser";
 import "../styles.css";
@@ -15,7 +15,6 @@ const Login = () => {
   const { http, setToken } = AuthUser();
 
   const onSubmit = (data) => {
-    console.log(data);
 
     // api call
     http.post("/login", data).then(

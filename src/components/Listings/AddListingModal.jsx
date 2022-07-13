@@ -6,25 +6,34 @@ import ApiService from "../../services/Api";
 const AddListingModal = (props) => {
   const { httprequestwtoken } = ApiService();
 
-  const onSubmit = (data) => {
-
-    //api call
-    httprequestwtoken.post("/listings", data).then(
-      (res) => {
-        console.log(res.data);
-      },
-      (error) => {
-        console.log(error.response.data);
-      }
-    );
-  };
-
   const {
     register,
     handleSubmit,
     formState: { errors },
     trigger,
+    reset,
+
   } = useForm();
+
+ 
+
+  const onSubmit = (data) => {
+    console.log(data);
+
+    data.image =data.image[0]
+
+    //api call
+    httprequestwtoken.post("/listings", data).then(
+      (res) => {
+        console.log(res.data);
+        reset();
+      },
+      (error) => {
+        console.log(error.response.data);
+        console.log(data);
+      }
+    );
+  };
 
   const style = {
     position: "absolute",
@@ -54,11 +63,31 @@ const AddListingModal = (props) => {
             Sell Your Item
           </Typography>
           <div id="modal-modal-description">
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)}  >
               <div className="ui divider"></div>
               <div className="ui form">
                 <div className="field">
-                  <label>What Item are your selling?</label>
+                  <label>What are you listing today ?</label>
+                  <input
+                    type="file"
+                    className={`form-control ${errors.image && "invalid"}`}
+                    placeholder="Image"
+                    {...register("image", {
+                      required: "Image Photo is Required",
+                    })}
+                    onKeyUp={() => {
+                      trigger("image");
+                    }}
+                    
+                  />
+                  {errors.image && (
+                    <small className="text-danger">
+                      {errors.image.message}
+                    </small>
+                  )}
+                </div>
+                <div className="field">
+                  <label>Item Name</label>
                   <input
                     type="text"
                     className={`form-control ${errors.itemname && "invalid"}`}
