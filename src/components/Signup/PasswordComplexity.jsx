@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ProgressBar } from "react-bootstrap";
 import zxcvbn from "zxcvbn";
-import { themeFont } from "../../utils/theme";
 
 const PasswordComplexity = ({ valueOfNewPassword }) => {
   const testResult = zxcvbn(valueOfNewPassword);
@@ -86,12 +85,7 @@ const PasswordComplexity = ({ valueOfNewPassword }) => {
       <div style={{ background: "grey" }}>
         <ProgressBar style={changeProgressBarColor()} />
       </div>
-      <div
-        style={{
-          fontFamily:
-            themeFont,
-        }}
-      >
+      <div>
         Password must contain:
       </div>
       <ul>

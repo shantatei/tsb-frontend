@@ -43,13 +43,25 @@ export default function AuthUser(){
             "Accept":"application/json"
         }
     });
+    
+    const httpwtoken = axios.create({
+        baseURL:"http://localhost:8000/api/auth",
+        headers:{
+            "Accept":"application/json",
+            authorization: "Bearer " + getToken(),
+        }
+    });
+
+
 
     return {
         setToken:saveToken,
         token,
         user,
         getToken,
+        getUser,
         http,
+        httpwtoken,
         logout
     }
 }

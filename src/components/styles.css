@@ -10,6 +10,13 @@
 	width: 400px;
 }
 
+.edit-container{
+	padding: 1rem;
+    position: relative;
+    /* border: 1px solid black; */
+	width: 400px;
+}
+
 #root > div {
     display: flex;
     justify-content: center;

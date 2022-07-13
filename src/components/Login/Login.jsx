@@ -1,6 +1,6 @@
-import { React } from "react";
+import { React, useState } from "react";
 import { useForm } from "react-hook-form";
-import AuthUser from "../../utils/AuthUser";
+import AuthUser from "../../services/AuthUser";
 import "../styles.css";
 
 const Login = () => {
@@ -8,12 +8,11 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
     trigger,
+    setError,
   } = useForm();
 
   const { http, setToken } = AuthUser();
-
 
   const onSubmit = (data) => {
     console.log(data);
@@ -26,10 +25,16 @@ const Login = () => {
       },
       (error) => {
         console.log(error.response.data);
+        if (
+          (error.response.data.error =
+            "Unauthorized, Invalid Email or Password")
+        ) {
+          console.log("invalid");
+          setError("email", { message: "Incorrect Email or Password" });
+          setError("password", { message: "Incorrect Email or Password" });
+        }
       }
     );
-
-    reset();
   };
 
   return (
@@ -72,8 +77,8 @@ const Login = () => {
                   message: "Password must have at least 6 characters",
                 },
               })}
-              onKeyUp={()=>{
-                trigger("password")
+              onKeyUp={() => {
+                trigger("password");
               }}
             />
             {errors.password && (

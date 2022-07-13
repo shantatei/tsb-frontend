@@ -2,7 +2,7 @@ import { React } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import PasswordComplexity from "./PasswordComplexity";
-import AuthUser from "../../utils/AuthUser";
+import AuthUser from "../../services/AuthUser";
 import "../styles.css";
 
 const Signup = () => {

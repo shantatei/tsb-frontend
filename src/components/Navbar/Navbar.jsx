@@ -1,55 +1,139 @@
-import React from "react";
-import { AppBar, Typography, Toolbar, Tabs, Tab } from "@mui/material";
+import { React, useState, useEffect } from "react";
+import {
+  AppBar,
+  Typography,
+  Toolbar,
+  Tabs,
+  Tab,
+  Menu,
+  MenuItem,
+  Button,
+} from "@mui/material";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Link } from "react-router-dom";
-import AuthUser from "../../utils/AuthUser"; 
+import AuthUser from "../../services/AuthUser";
 
 const Navbar = () => {
+  const [anchorEl, setAnchorEl] = useState(null);
 
-  
-  const {token,logout,getToken,http} = AuthUser();
+  const [profile, setProfile] = useState({});
+
+  useEffect(() => {
+    httpwtoken
+      .get("/profile", {
+      })
+      .then(
+        (res) => {
+          setProfile(res.data);
+        },
+        (error) => {
+          console.log(error.response.data);
+        }
+      );
+  }, []);
+
+
+  const openMenu = Boolean(anchorEl);
+
+  const handleClick = (e) => {
+    setAnchorEl(e.currentTarget);
+    console.log(e.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const { token, logout, getToken, http,httpwtoken } = AuthUser();
+
 
   const logoutUser = () => {
-
-    if(token !== undefined){
-        http.post('/logout',{token:getToken()}).then((res)=>{
-          console.log(res.data);
-
-        });
-        console.log(getToken());
-        logout();
+    if (token !== undefined) {
+      http.post("/logout", { token: getToken() }).then((res) => {
+        console.log(res.data);
+      });
+      console.log(getToken());
+      logout();
     }
+  };
+
+  if (!getToken()) {
+    return (
+      <>
+        <AppBar>
+          <Toolbar>
+            <Typography
+              style={{ textDecoration: "none", color: "white" }}
+              component={Link}
+              to="/"
+            >
+              TradeSellBuy
+            </Typography>
+            <Tabs sx={{ marginLeft: "auto" }} >
+              <Tab style={{ color: "white" }} component={Link} to={"/login"} label="Login" />
+              <Tab style={{ color: "white" }} component={Link} to={"/signup"} label="Signup" />
+            </Tabs>
+          </Toolbar>
+        </AppBar>
+      </>
+    );
   }
 
-  if(!getToken()){
-    
   return (
     <>
       <AppBar>
         <Toolbar>
-          <Typography style = {{textDecoration: 'none', color :"black"}}  component ={Link} to="/">TradeSellBuy</Typography>
-          <Tabs sx={{ marginLeft: "auto" }} textcolor="inherit">
-            <Tab component={Link} to={"/login"} label="Login" />
-            <Tab component={Link} to={"/signup"} label="Signup" />
-          </Tabs>
+          <Typography
+            style={{ textDecoration: "none", color: "white" }}
+            component={Link}
+            to="/"
+          >
+            TradeSellBuy
+          </Typography>
+          <Button
+            sx={{ marginLeft: "auto" }}
+            style={{ color: "white" }}
+            aria-controls="basic-menu"
+            aria-haspopup="true"
+            aria-expanded={openMenu ? "true" : undefined}
+            onClick={handleClick}
+            endIcon={<KeyboardArrowDownIcon />}
+          >
+            Hello , {profile.name}
+          </Button>
+          {/* Dropdown Items */}
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={openMenu}
+            onClose={handleClose}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "right",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+          >
+            <MenuItem onClick={handleClose}>
+              {/* <PersonIcon /> */}
+              Profile
+            </MenuItem>
+            <MenuItem component={Link} to={"/settings"}>
+              {/* <SettingsIcon /> */}
+              Settings
+            </MenuItem>
+            <MenuItem onClick={logoutUser}>
+              {/* <LogoutIcon /> */}
+              Logout
+            </MenuItem>
+          </Menu>
+          {/* </Tabs> */}
         </Toolbar>
       </AppBar>
     </>
   );
-  }
-
-  return(
-    <>
-      <AppBar>
-        <Toolbar>
-          <Typography style = {{textDecoration: 'none', color :"black"}}  component ={Link} to="/">TradeSellBuy</Typography>
-          <Tabs sx={{ marginLeft: "auto" }} textcolor="inherit">
-            <Tab  onClick={logoutUser}  label="Logout" />
-          </Tabs>
-        </Toolbar>
-      </AppBar>
-    </>
-  )
-
 };
 
 export default Navbar;
