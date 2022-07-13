@@ -12,26 +12,28 @@ import {
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Link } from "react-router-dom";
 import AuthUser from "../../services/AuthUser";
+import AddListingModal from "./AddListingModal";
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const [profile, setProfile] = useState({});
 
-  useEffect(() => {
-    httpwtoken
-      .get("/profile", {
-      })
-      .then(
-        (res) => {
-          setProfile(res.data);
-        },
-        (error) => {
-          console.log(error.response.data);
-        }
-      );
-  }, []);
+  const [open, setOpen] = useState(false);
+  const handleOpenmodal = () => setOpen(true);
+  const handleClosemodal = () => setOpen(false);
 
+
+  useEffect(() => {
+    httpwtoken.get("/profile", {}).then(
+      (res) => {
+        setProfile(res.data);
+      },
+      (error) => {
+        console.log(error.response.data);
+      }
+    );
+  }, []);
 
   const openMenu = Boolean(anchorEl);
 
@@ -44,8 +46,8 @@ const Navbar = () => {
     setAnchorEl(null);
   };
 
-  const { token, logout, getToken, http,httpwtoken } = AuthUser();
 
+  const { token, logout, getToken, http, httpwtoken } = AuthUser();
 
   const logoutUser = () => {
     if (token !== undefined) {
@@ -69,9 +71,19 @@ const Navbar = () => {
             >
               TradeSellBuy
             </Typography>
-            <Tabs sx={{ marginLeft: "auto" }} >
-              <Tab style={{ color: "white" }} component={Link} to={"/login"} label="Login" />
-              <Tab style={{ color: "white" }} component={Link} to={"/signup"} label="Signup" />
+            <Tabs sx={{ marginLeft: "auto" }}>
+              <Tab
+                style={{ color: "white" }}
+                component={Link}
+                to={"/login"}
+                label="Login"
+              />
+              <Tab
+                style={{ color: "white" }}
+                component={Link}
+                to={"/signup"}
+                label="Signup"
+              />
             </Tabs>
           </Toolbar>
         </AppBar>
@@ -82,6 +94,7 @@ const Navbar = () => {
   return (
     <>
       <AppBar>
+
         <Toolbar>
           <Typography
             style={{ textDecoration: "none", color: "white" }}
@@ -101,36 +114,43 @@ const Navbar = () => {
           >
             Hello , {profile.name}
           </Button>
-          {/* Dropdown Items */}
-          <Menu
-            id="basic-menu"
-            anchorEl={anchorEl}
-            open={openMenu}
-            onClose={handleClose}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "right",
-            }}
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-          >
-            <MenuItem onClick={handleClose}>
-              {/* <PersonIcon /> */}
-              Profile
-            </MenuItem>
-            <MenuItem component={Link} to={"/settings"}>
-              {/* <SettingsIcon /> */}
-              Settings
-            </MenuItem>
-            <MenuItem onClick={logoutUser}>
-              {/* <LogoutIcon /> */}
-              Logout
-            </MenuItem>
-          </Menu>
-          {/* </Tabs> */}
+          <Button onClick={handleOpenmodal} style={{ color: "white" }}>
+            SELL
+          </Button>
         </Toolbar>
+
+        {/* Dropdown Menu */}
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorEl}
+          open={openMenu}
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "right",
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+        >
+          <MenuItem onClick={handleClose}>
+            {/* <PersonIcon /> */}
+            Profile
+          </MenuItem>
+          <MenuItem component={Link} to={"/settings"}>
+            {/* <SettingsIcon /> */}
+            Settings
+          </MenuItem>
+          <MenuItem onClick={logoutUser}>
+            {/* <LogoutIcon /> */}
+            Logout
+          </MenuItem>
+        </Menu>
+
+        {/* //Add Listing Modal */}
+        <AddListingModal open={open} onClose={handleClosemodal}/>
+
       </AppBar>
     </>
   );
