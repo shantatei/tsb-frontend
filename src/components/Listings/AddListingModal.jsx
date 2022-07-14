@@ -3,30 +3,29 @@ import { Typography, Box, Modal } from "@mui/material";
 import { useForm } from "react-hook-form";
 import ApiService from "../../services/Api";
 
+
 const AddListingModal = (props) => {
   const { httprequestwtoken } = ApiService();
 
+  
   const {
     register,
     handleSubmit,
     formState: { errors },
     trigger,
-    reset,
-
   } = useForm();
 
  
 
+ 
+
   const onSubmit = (data) => {
-    console.log(data);
 
-    data.image =data.image[0]
-
+    data.image = data.image[0];
     //api call
     httprequestwtoken.post("/listings", data).then(
       (res) => {
         console.log(res.data);
-        reset();
       },
       (error) => {
         console.log(error.response.data);
@@ -63,7 +62,7 @@ const AddListingModal = (props) => {
             Sell Your Item
           </Typography>
           <div id="modal-modal-description">
-            <form onSubmit={handleSubmit(onSubmit)}  >
+            <form onSubmit={handleSubmit(onSubmit)}  encType="multipart/form-data" >
               <div className="ui divider"></div>
               <div className="ui form">
                 <div className="field">

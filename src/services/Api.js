@@ -9,14 +9,14 @@ export default function ApiService(){
     const httprequest = axios.create({
         baseURL:"http://localhost:8000/api/",
         headers:{
-            "Content-Type":"application/json"
+            "content-type":"application/json"
         }
     });
 
     const httprequestwtoken = axios.create({
         baseURL:"http://localhost:8000/api/",
         headers:{
-            "Content-Type":"application/json",
+            "content-type":"multipart/form-data",
             authorization: "Bearer " + getToken(),
         }
     });
