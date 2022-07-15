@@ -1,31 +1,40 @@
-import React from "react";
+import { React, useState, useEffect } from "react";
 import { Typography, Box, Modal } from "@mui/material";
 import { useForm } from "react-hook-form";
 import ApiService from "../../services/Api";
 
-
 const AddListingModal = (props) => {
   const { httprequestwtoken } = ApiService();
+  const [image, setImage] = useState();
+  const [preview, setPreview] = useState();
 
-  
+  useEffect(() => {
+    if (image) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreview(reader.result);
+      };
+      reader.readAsDataURL(image);
+    } else {
+      setPreview(null);
+    }
+  }, [image]);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     trigger,
+    reset
   } = useForm();
 
- 
-
- 
-
   const onSubmit = (data) => {
-
     data.image = data.image[0];
     //api call
     httprequestwtoken.post("/listings", data).then(
       (res) => {
         console.log(res.data);
+        reset()
       },
       (error) => {
         console.log(error.response.data);
@@ -62,11 +71,22 @@ const AddListingModal = (props) => {
             Sell Your Item
           </Typography>
           <div id="modal-modal-description">
-            <form onSubmit={handleSubmit(onSubmit)}  encType="multipart/form-data" >
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              encType="multipart/form-data"
+            >
               <div className="ui divider"></div>
               <div className="ui form">
                 <div className="field">
                   <label>What are you listing today ?</label>
+                  <img
+                    src={preview}
+                    width="150"
+                    alt=""
+                    // onClick={() => {
+                    //   setImage(null);
+                    // }}
+                  />
                   <input
                     type="file"
                     className={`form-control ${errors.image && "invalid"}`}
@@ -77,7 +97,14 @@ const AddListingModal = (props) => {
                     onKeyUp={() => {
                       trigger("image");
                     }}
-                    
+                    onChange={(event) => {
+                      const file = event.target.files[0];
+                      if (file) {
+                        setImage(file);
+                      } else {
+                        setImage(null);
+                      }
+                    }}
                   />
                   {errors.image && (
                     <small className="text-danger">
