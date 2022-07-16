@@ -10,11 +10,10 @@ import {
   Button,
 } from "@mui/material";
 import { red } from "@mui/material/colors";
-import "./listings.css";
 
 const ProductCard = ({ product }) => {
   return (
-    <Card sx={{ maxWidth: 300}}>
+    <Card sx={{ maxWidth: 300, ":hover":{boxShadow:"5px 10px 18px #888888"}, transition:"all ease-in 300ms"}} >
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="user">
@@ -23,11 +22,22 @@ const ProductCard = ({ product }) => {
         }
         title={product.user.name}
       ></CardHeader>
+      <div
+        style={{ position: "relative", padding: "1rem" }}
+      >
         <CardMedia
+          sx={{
+            maxWidth: "100%",
+            maxHeight: "100%",
+            height: "180px",
+            objectFit: "cover",
+            borderRadius:'5%',
+            backgroundColor:"#f2f0f0 !important"
+          }}
           component="img"
-          className="card-image"
           image={`http://localhost:8000/storage/products/${product.image}`}
         />
+      </div>
       <CardContent style={{ display: "flex", justifyContent: "left" }}>
         <div>
           <Typography variant="body2" color="text.secondary">
