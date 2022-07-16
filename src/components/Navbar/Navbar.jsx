@@ -22,6 +22,7 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const handleOpenmodal = () => setOpen(true);
   const handleClosemodal = () => setOpen(false);
+  const { token, logout, getToken, http, httpwtoken } = AuthUser();
 
 
   useEffect(() => {
@@ -33,7 +34,7 @@ const Navbar = () => {
         console.log(error.response.data);
       }
     );
-  }, []);
+  }, [getToken]);
 
   const openMenu = Boolean(anchorEl);
 
@@ -47,7 +48,6 @@ const Navbar = () => {
   };
 
 
-  const { token, logout, getToken, http, httpwtoken } = AuthUser();
 
   const logoutUser = () => {
     if (token !== undefined) {
