@@ -1,11 +1,27 @@
-import { React } from "react";
+import { React, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import PasswordComplexity from "./PasswordComplexity";
 import AuthUser from "../../services/AuthUser";
+import DefaultImage from "../../assets/user.png";
 import "../styles.css";
 
 const Signup = () => {
+  const [image, setImage] = useState();
+  const [preview, setPreview] = useState();
+
+  useEffect(() => {
+    if (image) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreview(reader.result);
+      };
+      reader.readAsDataURL(image);
+    } else {
+      setPreview(null);
+    }
+  }, [image]);
+
   const DefaultFormValues = {
     registration: {
       name: "",
@@ -30,8 +46,9 @@ const Signup = () => {
   const { http } = AuthUser();
 
   const onSubmit = (data) => {
+    data.profile_photo = data.profile_photo[0];
     console.log(data);
-
+    
     // api call
 
     http.post("/register", data).then(
@@ -56,6 +73,40 @@ const Signup = () => {
         <h1 className="form-header">Signup</h1>
         <div className="ui divider"></div>
         <div className="ui form">
+          <div className="field">
+            <label>Upload Avatar</label>
+            <img
+              src={preview == null ? DefaultImage : preview}
+              width="150"
+              style={{ borderRadius: "50%" }}
+              alt=""
+              // onClick={() => {
+              //   setImage(null);
+              // }}
+            />
+            <input
+              type="file"
+              className={`form-control ${errors.profile_photo && "invalid"}`}
+              placeholder="Image"
+              {...register("profile_photo")}
+              onKeyUp={() => {
+                trigger("profile_photo");
+              }}
+              onChange={(event) => {
+                const file = event.target.files[0];
+                if (file) {
+                  setImage(file);
+                } else {
+                  setImage(null);
+                }
+              }}
+            />
+            {errors.profile_photo && (
+              <small className="text-danger">
+                {errors.profile_photo.message}
+              </small>
+            )}
+          </div>
           <div className="field">
             <label>Name</label>
             <input

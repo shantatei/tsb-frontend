@@ -134,7 +134,7 @@ const Navbar = () => {
             horizontal: "right",
           }}
         >
-          <MenuItem onClick={handleClose}>
+          <MenuItem component={Link} to={"/profile"}>
             {/* <PersonIcon /> */}
             Profile
           </MenuItem>

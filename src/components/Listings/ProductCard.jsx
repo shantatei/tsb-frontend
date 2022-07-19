@@ -13,29 +13,34 @@ import { red } from "@mui/material/colors";
 
 const ProductCard = ({ product }) => {
   return (
-    <Card sx={{ maxWidth: 300, ":hover":{boxShadow:"5px 10px 18px #888888"}, transition:"all ease-in 300ms"}} >
+    <Card
+      sx={{
+        maxWidth: 300,
+        ":hover": { boxShadow: "5px 10px 18px #888888" },
+        transition: "all ease-in 300ms",
+      }}
+    >
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="user">
-            S
-          </Avatar>
+          <Avatar
+            src={`http://localhost:8000/storage/profile_images/${product.user.profile_photo}`}
+            aria-label="user"
+          ></Avatar>
         }
         title={product.user.name}
       ></CardHeader>
-      <div
-        style={{ position: "relative", padding: "1rem" }}
-      >
+      <div style={{ position: "relative", padding: "1rem" }}>
         <CardMedia
           sx={{
             maxWidth: "100%",
             maxHeight: "100%",
             height: "180px",
             objectFit: "cover",
-            borderRadius:'5%',
-            backgroundColor:"#f2f0f0 !important"
+            borderRadius: "5%",
+            backgroundColor: "#f2f0f0 !important",
           }}
           component="img"
-          image={`http://localhost:8000/storage/products/${product.image}`}
+          image={`http://localhost:8000/storage/products_images/${product.image}`}
         />
       </div>
       <CardContent style={{ display: "flex", justifyContent: "left" }}>

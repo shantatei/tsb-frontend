@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Login, Navbar, Signup, Listings, Settings } from "./components";
+import { Login, Navbar, Signup, Listings, Settings, Profile } from "./components";
 
 function App() {
   return (
@@ -11,6 +11,7 @@ function App() {
           <Route path="/settings" element = {<Settings/>}> </Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/signup" element={<Signup />}></Route>
+          <Route path="/profile" element={<Profile />}></Route>
         </Routes>
       </div>
     </Router>

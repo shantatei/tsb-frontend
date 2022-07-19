@@ -17,6 +17,7 @@ export default function ApiService(){
         baseURL:"http://localhost:8000/api/",
         headers:{
             "content-type":"multipart/form-data",
+            "Accept":"application/json",
             authorization: "Bearer " + getToken(),
         }
     });
