@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from "react";
 import ApiService from "../../services/Api";
-import { Grid } from "@mui/material";
+import { Container, Grid } from "@mui/material";
 import ProductCard from "./ProductCard";
 
 const Listings = () => {
@@ -33,7 +33,7 @@ const Listings = () => {
       spacing={5}
     >
       {products.map((product) => (
-        <Grid item key={product.id} xs={12} sm={6} m={4} lg={2.4}>
+        <Grid item key={product.id} xs={12} sm={5} m={4} lg={2.4}>
           <ProductCard product={product} />
         </Grid>
       ))}

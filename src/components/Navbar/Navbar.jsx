@@ -24,7 +24,6 @@ const Navbar = () => {
   const handleClosemodal = () => setOpen(false);
   const { token, logout, getToken, http, httpwtoken } = AuthUser();
 
-
   useEffect(() => {
     httpwtoken.get("/profile", {}).then(
       (res) => {
@@ -34,7 +33,7 @@ const Navbar = () => {
         console.log(error.response.data);
       }
     );
-  }, [getToken]);
+  }, []);
 
   const openMenu = Boolean(anchorEl);
 
@@ -46,8 +45,6 @@ const Navbar = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-
 
   const logoutUser = () => {
     if (token !== undefined) {
@@ -94,7 +91,6 @@ const Navbar = () => {
   return (
     <>
       <AppBar>
-
         <Toolbar>
           <Typography
             style={{ textDecoration: "none", color: "white" }}
@@ -149,8 +145,7 @@ const Navbar = () => {
         </Menu>
 
         {/* //Add Listing Modal */}
-        <AddListingModal open={open} onClose={handleClosemodal}/>
-
+        <AddListingModal open={open} onClose={handleClosemodal} />
       </AppBar>
     </>
   );

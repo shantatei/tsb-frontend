@@ -1,9 +1,65 @@
-import React from 'react'
+import { React, useState, useEffect } from "react";
+import { Grid } from "@mui/material";
+import ProfileCard from "./ProfileCard";
+import ProfileBanner from "./ProfileBanner";
+import ProfileTabs from "./ProfileTabs";
+import AuthUser from "../../services/AuthUser";
+import ApiService from "../../services/Api";
 
 const Profile = () => {
-  return (
-    <div>Profile</div>
-  )
-}
+  const { httprequestwtoken } = ApiService();
+  const { httpwtoken } = AuthUser();
+  const [profile, setProfile] = useState({});
+  const [listings, setListings] = useState([]);
 
-export default Profile
+  const fetchProfile = () => {
+    httpwtoken.get("/profile", {}).then(
+      (res) => {
+        setProfile(res.data);
+      },
+      (error) => {
+        console.log(error.response.data);
+      }
+    );
+  };
+
+  const fetchProfileListings = () =>{
+    httprequestwtoken.get("/listings", {}).then(
+      (res) => {
+        setListings(res.data);
+      },
+      (error) => {
+        console.log(error.response.data);
+      }
+    );
+  };
+
+  useEffect(() => {
+    fetchProfile();
+    fetchProfileListings();
+  }, []);
+
+  return (
+    <Grid
+      container
+      justify="center"
+      alignItems={"center"}
+      sx={{
+        top: "70px",
+        position: "relative",
+      }}
+    >
+      <Grid item md={12}>
+        <ProfileBanner />
+      </Grid>
+      <Grid item md={2}>
+        <ProfileCard profile={profile} />
+      </Grid>
+      <Grid item md={10}>
+        <ProfileTabs listings={listings} />
+      </Grid>
+    </Grid>
+  );
+};
+
+export default Profile;

@@ -1,6 +1,7 @@
 import { React } from "react";
 import { useForm } from "react-hook-form";
 import AuthUser from "../../services/AuthUser";
+import { Alert, AlertTitle } from "@mui/material";
 import "../styles.css";
 
 const Login = () => {
@@ -15,12 +16,17 @@ const Login = () => {
   const { http, setToken } = AuthUser();
 
   const onSubmit = (data) => {
-
     // api call
     http.post("/login", data).then(
       (res) => {
         console.log(res.data);
         setToken(res.data.user, res.data.token);
+        return (
+          <Alert severity="success" onClose={() => {}}>
+            <AlertTitle>Success</AlertTitle>
+            This is a success alert — <strong>check it out!</strong>
+          </Alert>
+        );
       },
       (error) => {
         console.log(error.response.data);
@@ -31,6 +37,12 @@ const Login = () => {
           console.log("invalid");
           setError("email", { message: "Incorrect Email or Password" });
           setError("password", { message: "Incorrect Email or Password" });
+          return (
+            <Alert severity="error" onClose={() => {}}>
+              <AlertTitle>Error</AlertTitle>
+              This is an error alert — <strong>check it out!</strong>
+            </Alert>
+          );
         }
       }
     );

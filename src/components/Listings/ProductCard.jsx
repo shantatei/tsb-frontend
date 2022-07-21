@@ -9,7 +9,6 @@ import {
   Avatar,
   Button,
 } from "@mui/material";
-import { red } from "@mui/material/colors";
 
 const ProductCard = ({ product }) => {
   return (

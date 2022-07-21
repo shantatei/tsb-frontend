@@ -6,6 +6,7 @@ function App() {
     <Router>
       <div>
         <Navbar />
+        
         <Routes>
           <Route path="/" element = {<Listings/>}> </Route>
           <Route path="/settings" element = {<Settings/>}> </Route>
