@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, Fragment } from "react";
 import PropTypes from "prop-types";
 import {
   Table,
@@ -13,6 +13,7 @@ import {
   Box,
   Toolbar,
   Typography,
+  TextField,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
@@ -20,6 +21,8 @@ import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
+import ReadOnlyRow from "./ReadOnlyRow";
+import EditableRow from "./EditableRow";
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -90,9 +93,20 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
-const ProfileListings = ({ rows }) => {
+const ProfileListings = ({
+  rows,
+  handleRemoveListing,
+  handleUpdateListing,
+}) => {
+  const [editListingId, setEditListingId] = useState(null);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(3);
+  const [editFormData, setEditFormData] = useState({
+    itemname: "",
+    price: "",
+    quantity: "",
+    description: "",
+  });
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -107,9 +121,54 @@ const ProfileListings = ({ rows }) => {
     setPage(0);
   };
 
+  const handleEditClick = (event, listing) => {
+    event.preventDefault();
+    setEditListingId(listing.id);
+
+    const formValues = {
+      itemname: listing.itemname,
+      price: listing.price,
+      quantity: listing.quantity,
+      description: listing.description,
+    };
+
+    setEditFormData(formValues);
+  };
+
+  const handleEditFormChange = (event) => {
+    event.preventDefault();
+
+    const fieldName = event.target.getAttribute("name");
+    const fieldValue = event.target.value;
+
+    const newFormData = { ...editFormData };
+    newFormData[fieldName] = fieldValue;
+
+    setEditFormData(newFormData);
+  };
+
+  const handleEditFormSubmit = (event) => {
+    event.preventDefault();
+
+    const editedListing = {
+      itemname: editFormData.itemname,
+      price: parseFloat(editFormData.price),
+      quantity: parseFloat(editFormData.quantity),
+      description: editFormData.description,
+    };
+
+    console.log(editedListing);
+    handleUpdateListing(editListingId,editedListing)
+    setEditListingId(null);
+  };
+
+  const handleCancelClick = () => {
+    setEditListingId(null);
+  };
+
   return (
     <>
-      <Box>
+      <Box component="form" onSubmit={handleEditFormSubmit}>
         <Paper>
           <Toolbar>
             <Typography
@@ -121,18 +180,17 @@ const ProfileListings = ({ rows }) => {
               Listings
             </Typography>
           </Toolbar>
-          <TableContainer
-            sx={{ borderRadius: "15", margin: "10px 10px", maxWidth: "950" }}
-          >
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableContainer sx={{ borderRadius: "15" }}>
+            <Table aria-label="simple table">
               <TableHead sx={{ fontWeigh: "bold" }}>
                 <TableRow>
                   <TableCell>Id</TableCell>
-                  <TableCell align="right">Name</TableCell>
-                  <TableCell align="right">Image</TableCell>
-                  <TableCell align="right">Price&nbsp;($)</TableCell>
-                  <TableCell align="right">Quantity&nbsp;</TableCell>
-                  <TableCell align="right">Description</TableCell>
+                  <TableCell align="left">Name</TableCell>
+                  <TableCell align="left">Image</TableCell>
+                  <TableCell align="left">Price&nbsp;($)</TableCell>
+                  <TableCell align="left">Quantity&nbsp;</TableCell>
+                  <TableCell align="left">Description</TableCell>
+                  <TableCell align="left">Actions</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -143,29 +201,21 @@ const ProfileListings = ({ rows }) => {
                     )
                   : rows
                 ).map((listing) => (
-                  <TableRow
-                    key={listing.id}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="row">
-                      {listing.id}
-                    </TableCell>
-                    <TableCell align="right">{listing.itemname}</TableCell>
-                    <TableCell align="right">
-                      {" "}
-                      <img
-                        src={`http://localhost:8000/storage/products_images/${listing.image}`}
-                        style={{
-                          width: "100px",
-                          height: "100px",
-                        }}
-                        alt="product"
+                  <Fragment>
+                    {editListingId === listing.id ? (
+                      <EditableRow
+                        listing={listing}
+                        editFormData={editFormData}
+                        handleEditFormChange={handleEditFormChange}
+                        handleCancelClick={handleCancelClick}
                       />
-                    </TableCell>
-                    <TableCell align="right">{listing.price}</TableCell>
-                    <TableCell align="right">{listing.quantity}</TableCell>
-                    <TableCell align="right">{listing.description}</TableCell>
-                  </TableRow>
+                    ) : (
+                      <ReadOnlyRow
+                        listing={listing}
+                        handleEditClick={handleEditClick}
+                      />
+                    )}
+                  </Fragment>
                 ))}
 
                 {emptyRows > 0 && (

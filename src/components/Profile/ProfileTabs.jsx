@@ -36,7 +36,11 @@ function a11yProps(index) {
   };
 }
 
-const ProfileTabs = ({ listings }) => {
+const ProfileTabs = ({
+  listings,
+  handleRemoveListing,
+  handleUpdateListing,
+}) => {
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
@@ -44,7 +48,7 @@ const ProfileTabs = ({ listings }) => {
   };
 
   return (
-    <Box sx={{ width: "100%", height:"100%" }}>
+    <Box sx={{ width: "100%", height: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
           value={value}
@@ -56,7 +60,11 @@ const ProfileTabs = ({ listings }) => {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <ProfileListings rows={listings} />
+        <ProfileListings
+          rows={listings}
+          handleRemoveListing={handleRemoveListing}
+          handleUpdateListing={handleUpdateListing}
+        />
       </TabPanel>
       <TabPanel value={value} index={1}>
         Item Two
