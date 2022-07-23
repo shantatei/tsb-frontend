@@ -22,9 +22,19 @@ export default function ApiService(){
         }
     });
 
+    const httprequestwtoken2 = axios.create({
+        baseURL:"http://localhost:8000/api/",
+        headers:{
+            "content-type":"application/json",
+            "Accept":"application/json",
+            authorization: "Bearer " + getToken(),
+        }
+    });
+
 
     return {
         httprequest,
-        httprequestwtoken
+        httprequestwtoken,
+        httprequestwtoken2
     }
 }

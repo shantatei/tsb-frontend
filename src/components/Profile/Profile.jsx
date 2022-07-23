@@ -7,7 +7,7 @@ import AuthUser from "../../services/AuthUser";
 import ApiService from "../../services/Api";
 
 const Profile = () => {
-  const { httprequestwtoken } = ApiService();
+  const { httprequestwtoken , httprequestwtoken2} = ApiService();
   const { httpwtoken } = AuthUser();
   const [profile, setProfile] = useState({});
   const [listings, setListings] = useState([]);
@@ -46,12 +46,13 @@ const Profile = () => {
   };
 
   const handleUpdateListing = (id, edited) => {
-    httprequestwtoken.put(`/listings/${id}/update`, edited).then(
+    httprequestwtoken2.put(`/listings/${id}/update`, edited).then(
       (res) => {
         console.log(res.data);
       },
       (error) => {
         console.log(error.response.data);
+        console.log(edited);
       }
     );
   };
@@ -65,7 +66,6 @@ const Profile = () => {
     <Grid
       container
       justify="center"
-      alignItems={"center"}
       sx={{
         top: "70px",
         position: "relative",
@@ -74,7 +74,7 @@ const Profile = () => {
       <Grid item md={12} sx={{ paddingBottom: "20px" }}>
         <ProfileBanner />
       </Grid>
-      <Grid item md={2}>
+      <Grid item md={2} >
         <ProfileCard profile={profile} />
       </Grid>
       <Grid item md={10}>

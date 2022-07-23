@@ -19,7 +19,6 @@ const Login = () => {
     // api call
     http.post("/login", data).then(
       (res) => {
-        console.log(res.data);
         setToken(res.data.user, res.data.token);
         return (
           <Alert severity="success" onClose={() => {}}>

@@ -25,7 +25,7 @@ const Navbar = () => {
   const { token, logout, getToken, http, httpwtoken } = AuthUser();
 
   useEffect(() => {
-    httpwtoken.get("/profile", {}).then(
+    httpwtoken.get("/profile").then(
       (res) => {
         setProfile(res.data);
       },

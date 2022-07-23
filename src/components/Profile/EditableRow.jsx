@@ -15,7 +15,7 @@ const EditableRow = ({ listing, editFormData, handleEditFormChange , handleCance
       <TableCell align="left">
         <TextField
           variant="standard"
-          defaultValue={listing.itemname}
+          // defaultValue={listing.itemname}
           name="itemname"
           value={editFormData.itemname}
           onChange={handleEditFormChange}
@@ -34,7 +34,7 @@ const EditableRow = ({ listing, editFormData, handleEditFormChange , handleCance
       <TableCell align="left">
         <TextField
           variant="standard"
-          defaultValue={listing.price}
+          // defaultValue={listing.price}
           name="price"
           value={editFormData.price}
           onChange={handleEditFormChange}
@@ -43,7 +43,7 @@ const EditableRow = ({ listing, editFormData, handleEditFormChange , handleCance
       <TableCell align="left">
         <TextField
           variant="standard"
-          defaultValue={listing.quantity}
+          // defaultValue={listing.quantity}
           name="quantity"
           value={editFormData.quantity}
           onChange={handleEditFormChange}
@@ -52,7 +52,7 @@ const EditableRow = ({ listing, editFormData, handleEditFormChange , handleCance
       <TableCell align="left">
         <TextField
           variant="standard"
-          defaultValue={listing.description}
+          // defaultValue={listing.description}
           name="description"
           value={editFormData.description}
           onChange={handleEditFormChange}
