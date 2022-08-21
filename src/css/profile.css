@@ -1,0 +1,9 @@
+.edit-text-field input{
+    color: white;
+    font-size: 0.875rem;
+}
+
+.edit-text-field >div::before{
+    border-bottom: 1px solid white!important;
+    width: 80%;
+}

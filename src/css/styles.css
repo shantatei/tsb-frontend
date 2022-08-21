@@ -1,0 +1,21 @@
+body{
+	background-color: #e6e9f8;
+}
+
+.pagination svg{
+	color: white!important;
+}
+.MuiTablePagination-menuItem{
+	color: black!important;
+}
+
+#root > div {
+    display: flex;
+    justify-content: center;
+}
+
+
+
+
+
+
