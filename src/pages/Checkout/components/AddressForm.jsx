@@ -40,7 +40,6 @@ const AddressForm = ({ next }) => {
         <Stack direction="row" justifyContent="space-evenly">
           <TextField
             margin="normal"
-            required
             sx={{ width: "40%" }}
             {...register("firstName", {
               required: "FirstName is Required",
@@ -52,7 +51,6 @@ const AddressForm = ({ next }) => {
           />
           <TextField
             margin="normal"
-            required
             sx={{ width: "40%" }}
             {...register("lastName", {
               required: "lastName is Required",
@@ -66,7 +64,6 @@ const AddressForm = ({ next }) => {
         <Stack justifyContent={"center"} display="flex" alignItems="center">
           <TextField
             margin="normal"
-            required
             sx={{ width: "87%" }}
             {...register("Address", {
               required: "Address is Required",
@@ -78,7 +75,6 @@ const AddressForm = ({ next }) => {
           />
           <TextField
             margin="normal"
-            required
             sx={{ width: "87%" }}
             {...register("zip", {
               required: "Postal Code is Required",
@@ -90,7 +86,6 @@ const AddressForm = ({ next }) => {
           />
           <TextField
             margin="normal"
-            required
             sx={{ width: "87%" }}
             {...register("email", {
               required: "Email is Required",

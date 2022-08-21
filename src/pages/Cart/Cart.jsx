@@ -19,6 +19,7 @@ import {
   removeFromCart,
 } from "../../redux/cartSlice";
 import { Link } from "react-router-dom";
+import EmptyCartImage from "../../assets/Add to Cart-amico.png";
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
@@ -46,12 +47,25 @@ const Cart = () => {
 
   const EmptyCart = () => {
     return (
-      <Container>
-        <Typography variant="h6">Your cart is currently empty</Typography>
-        <Typography component={Link} to="/" variant="h6">
-          Start shopping
-        </Typography>
-      </Container>
+      <Grid container>
+        <Grid item md={6}>
+          <Typography variant="h6">Your cart is currently empty</Typography>
+          <Button component={Link} to="/" variant="contained">
+            Start shopping
+          </Button>
+        </Grid>
+        <Grid item md={6}>
+          <img
+            src={EmptyCartImage}
+            alt=""
+            style={{
+              height: "calc(100vh - 70px - 2rem)",
+              position: "absolute",
+              top: "100px",
+            }}
+          ></img>
+        </Grid>
+      </Grid>
     );
   };
 
@@ -184,9 +198,7 @@ const Cart = () => {
 
   return (
     <Container>
-      <Typography variant="h2" ml="1rem">
-        Shopping Cart
-      </Typography>
+      <Typography variant="h2">Shopping Cart</Typography>
       {cart.cartItems.length === 0 ? <EmptyCart /> : <FilledCart cart={cart} />}
     </Container>
   );
