@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { SetProducts } from "../../redux/listingSlice";
 import { SetFavs } from "../../redux/favouriteSlice";
 import ApiService from "../../services/Api";
+import NoFavourite from "../../assets/Online wishes list-pana.png";
 
 const Favourites = () => {
   const getFavoritePosts = () => {
@@ -40,9 +41,16 @@ const Favourites = () => {
   return (
     <Box>
       {favList.length === 0 ? (
-        <Typography variant="h3" sx={{ ml: "2rem" }}>
-          You have no favourites
-        </Typography>
+        <Box sx={{display:"flex",justifyContent:"center",alignItems:"center"}}>
+          <Typography variant="h3" sx={{ ml: "2rem" }}>
+            You have no favourites
+          </Typography>
+          <img
+            src={NoFavourite}
+            alt=""
+            style={{ height: "calc(100vh - 70px - 2rem)" }}
+          />
+        </Box>
       ) : (
         <Typography variant="h3" sx={{ ml: "2rem" }}>
           Your Favourites
