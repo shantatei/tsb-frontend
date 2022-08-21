@@ -9,6 +9,7 @@ import {
   Divider,
   Button,
   Container,
+  Box,
 } from "@mui/material";
 import AddressForm from "./components/AddressForm";
 import PaymentForm from "./components/PaymentForm";
@@ -53,7 +54,15 @@ const Checkout = () => {
 
   const Confirmation = () =>
     order.id ? (
-      <>
+      <Container
+        p={2}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
         <Typography variant="h5">
           Thank you for your purchase, {order.billing_firstname}{" "}
           {order.billing_lastname}
@@ -61,14 +70,27 @@ const Checkout = () => {
         <Divider />
         <Typography variant="subtitle2">Order ref : {order.id}</Typography>
         <br />
-        <Button component={Link} to="/" variant="outlined" type="button">
+        <Button
+          component={Link}
+          to="/"
+          variant="contained"
+          type="button"
+          sx={{ mb: 2 }}
+        >
           Back to Home
         </Button>
-      </>
+      </Container>
     ) : (
-      <div>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+        mb={2}
+      >
         <CircularProgress />
-      </div>
+      </Box>
     );
 
   const Form = () =>

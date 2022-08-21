@@ -13,6 +13,19 @@ import PaymentIcon from "@mui/icons-material/Payment";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import { Link } from "react-router-dom";
 
+const items = [
+  {
+    name: "Dashboard",
+    icon: <DashboardIcon />,
+    path: "/dashboard",
+    divider: true,
+  },
+  { name: "Users", icon: <PersonIcon />, path: "/users" },
+  { name: "Products", icon: <StoreIcon />, path: "/products" },
+  { name: "Orders", icon: <PaymentIcon />, path: "/orders", divider: true },
+  { name: "Roles", icon: <ManageAccountsIcon />, path: "/roles" },
+];
+
 const Sidebar = () => {
   const drawerWidth = 240;
 
@@ -29,57 +42,23 @@ const Sidebar = () => {
       anchor="left"
     >
       <List>
-        <ListItem disablePadding to="/dashboard" component={Link}>
-          <ListItemButton>
-            <ListItemIcon>
-              <DashboardIcon />
-            </ListItemIcon>
-            <ListItemText primary="Dashboard" />
-          </ListItemButton>
-        </ListItem>
-      </List>
-      <Divider />
-      <List>
-        {["Users", "Products", "Orders"].map((text, index) => (
-          <ListItem
-            key={text}
-            disablePadding
-            component={Link}
-            to={
-              index === 0
-                ? "/users"
-                : index === 1
-                ? "/products"
-                : index === 2
-                ? "/orders "
-                : "/dashboard"
-            }
-          >
-            <ListItemButton>
-              <ListItemIcon>
-                {index === 0 ? (
-                  <PersonIcon />
-                ) : index === 1 ? (
-                  <StoreIcon />
-                ) : (
-                  <PaymentIcon />
-                )}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
+        {items.map((text, index) => (
+          <>
+            <ListItem
+              sx={{ color: "black" }}
+              key={text}
+              disablePadding
+              component={Link}
+              to={text.path}
+            >
+              <ListItemButton>
+                <ListItemIcon>{text.icon}</ListItemIcon>
+                <ListItemText primary={text.name} />
+              </ListItemButton>
+            </ListItem>
+            {text.divider ? <Divider /> : <div></div>}
+          </>
         ))}
-      </List>
-      <Divider />
-      <List>
-        <ListItem disablePadding to="/roles" component={Link}>
-          <ListItemButton>
-            <ListItemIcon>
-              <ManageAccountsIcon />
-            </ListItemIcon>
-            <ListItemText primary="Roles" />
-          </ListItemButton>
-        </ListItem>
       </List>
     </Drawer>
   );

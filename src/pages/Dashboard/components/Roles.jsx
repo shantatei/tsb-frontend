@@ -138,6 +138,7 @@ const Roles = () => {
   return (
     <>
       <Typography
+        p={2}
         variant="h4"
         sx={{
           position: "relative",

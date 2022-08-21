@@ -90,14 +90,6 @@ const CartItem = ({ cartItem }) => {
               Subtotal: ${cartItem.price * cartItem.cartQuantity}
             </Typography>
             <Button
-              // sx={{
-              //   height: "3rem",
-              //   bgcolor: "#3396f5",
-              //   color: "white",
-              //   "&:hover": {
-              //     backgroundColor: "#3396f5",
-              //   },
-              // }}
               disableRipple
               disableElevation
               disableFocusRipple

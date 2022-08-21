@@ -45,12 +45,14 @@ const Orders = () => {
   return (
     <>
       <Typography
+        p={2}
         variant="h4"
         sx={{
           position: "relative",
           left: "240px",
           mb: "5px",
           width: "100%",
+
           bgcolor: "background.default",
         }}
       >

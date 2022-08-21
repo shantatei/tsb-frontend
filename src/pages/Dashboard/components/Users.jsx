@@ -77,7 +77,9 @@ const Users = () => {
     httpadmin.post("/assignRole", data).then(
       (res) => {
         console.log(res.data);
-        if (res.data.message === "Role has already been assigned to this user") {
+        if (
+          res.data.message === "Role has already been assigned to this user"
+        ) {
           setError("email", {
             message: "Role has already been assigned to this user",
           });
@@ -144,6 +146,7 @@ const Users = () => {
   return (
     <>
       <Typography
+        p={2}
         variant="h4"
         sx={{
           position: "relative",

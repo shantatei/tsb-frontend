@@ -26,6 +26,7 @@ const Products = () => {
     <>
       <Typography
         variant="h4"
+        p={2}
         sx={{
           position: "relative",
           left: "240px",
