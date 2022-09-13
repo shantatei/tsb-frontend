@@ -37,6 +37,16 @@ TSB is a vendor e-commerce website that is built using React + Laravel .
     -   Add a Product to your favourites
     -   Remove a Favourite Product
     -   View Favourites
-        
+    
+## Credits
+
+Inspired from Amazon and Carousell
+
+## Built with
+-   Javascript
+-   React
+-   Material UI
+-   Redux Toolkit
+
         
      
